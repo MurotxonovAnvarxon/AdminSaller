@@ -48,6 +48,7 @@ fun DeleteDialog(
                         fontSize = 22.sp,
                         textAlign = TextAlign.Center
                     )
+
                     Spacer(modifier = Modifier.size(30.dp))
                     Row(modifier = Modifier.fillMaxWidth()) {
                         Button(

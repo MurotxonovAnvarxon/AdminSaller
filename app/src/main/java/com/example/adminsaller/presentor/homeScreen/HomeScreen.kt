@@ -23,6 +23,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -114,11 +115,17 @@ fun MainScreenContent(
             )
             Spacer(modifier = Modifier.weight(1f))
 
+
             Image(painter = painterResource(id = R.drawable.boxes),
-                contentDescription ="boxes",
+                contentDescription = "boxes",
                 modifier = Modifier
-                    .size(80.dp)
-                    .clickable {  } )
+                    .size(40.dp)
+                    .align(Alignment.CenterVertically)
+                    .clickable {
+                        onEventDispatcher.invoke(
+                            HomeContract.Intent.MoveToProductsScreen
+                        )
+                    })
 
         }
 
@@ -146,7 +153,7 @@ fun MainScreenContent(
                     onEdit = { data ->
 
                         sellerName.value = data.sellerName
-                        id.value=data.id
+                        id.value = data.id
                         sellerPass.value = data.password
                         showEditDialog.value = true
                     }
@@ -175,7 +182,7 @@ fun MainScreenContent(
         onClickEdit = {
             onEventDispatcher.invoke(
                 HomeContract.Intent.EditSeller(
-                   id.value, it.sellerName,it.password
+                    id.value, it.sellerName, it.password
                 )
             )
             showEditDialog.value = false

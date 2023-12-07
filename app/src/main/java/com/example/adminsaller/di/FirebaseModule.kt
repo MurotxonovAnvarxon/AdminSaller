@@ -17,6 +17,10 @@ class FirebaseModule {
     @[Provides Singleton]
     fun firestoreProvider(): FirebaseFirestore = Firebase.firestore
 
+
+
+
+
     @[Provides Singleton]
     fun storageProvider(): StorageReference = Firebase.storage.reference
 }

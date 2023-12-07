@@ -29,7 +29,6 @@ class HomeViewModel @Inject constructor(
 
     override fun onEventDispatcher(intent: HomeContract.Intent) {
         when (intent) {
-
             is HomeContract.Intent.EditSeller -> {
                 viewModelScope.launch {
                     repository.editSeller(
@@ -39,7 +38,12 @@ class HomeViewModel @Inject constructor(
                     ).onEach {
                     }
                         .collect()
+                }
+            }
 
+            HomeContract.Intent.MoveToProductsScreen -> {
+                viewModelScope.launch {
+                    direction.moveToProductScreen()
                 }
             }
 

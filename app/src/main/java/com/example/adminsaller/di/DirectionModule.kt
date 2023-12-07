@@ -2,6 +2,8 @@ package com.example.adminsaller.di
 
 import com.example.adminsaller.presentor.AddScreen.SellerAddDirection
 import com.example.adminsaller.presentor.AddScreen.SellerAddDirectionImpl
+import com.example.adminsaller.presentor.addProductScreen.AddProductDirection
+import com.example.adminsaller.presentor.addProductScreen.AddProductsScreenDirectionImpl
 import com.example.adminsaller.presentor.homeScreen.HomeDirection
 import com.example.adminsaller.presentor.homeScreen.HomeDirectionImpl
 import com.example.adminsaller.presentor.productScreen.ProductDirection
@@ -30,6 +32,9 @@ interface DirectionModule {
 
     @[Binds Singleton]
     fun bindProductScreenDirection(impl: ProductDirectionImpl): ProductDirection
+
+    @[Binds Singleton]
+    fun bindAddProductsScreenDirection(impl: AddProductsScreenDirectionImpl): AddProductDirection
 
 
 }

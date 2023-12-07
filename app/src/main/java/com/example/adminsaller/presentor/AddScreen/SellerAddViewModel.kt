@@ -30,6 +30,7 @@ class SellerAddViewModel @Inject constructor(
                         password = event.password
                     )
                 )
+
                     .onStart { postSideEffect(SellerAddContract.SideEffect.ProgressState(true)) }
                     .onCompletion { postSideEffect(SellerAddContract.SideEffect.ProgressState(false)) }
                     .onEach {

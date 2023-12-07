@@ -24,7 +24,7 @@ interface ProductContract {
             val productSellingPrice: Int,
             val productIsValid: Boolean,
             val productComment: String
-        )
+        ):Intent
 
     }
 
