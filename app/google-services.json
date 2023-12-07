@@ -1,0 +1,182 @@
+{
+  "project_info": {
+    "project_number": "1012874613513",
+    "firebase_url": "https://bootcamp6-anvarxon-default-rtdb.firebaseio.com",
+    "project_id": "bootcamp6-anvarxon",
+    "storage_bucket": "bootcamp6-anvarxon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012874613513:android:62da06c5b53b40272439d8",
+        "android_client_info": {
+          "package_name": "com.example.adminsaller"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX3zKhaj25POu30qtTSAqErJYUJwNwFi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012874613513:android:91a343ff9710060a2439d8",
+        "android_client_info": {
+          "package_name": "com.example.onlinex_0"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX3zKhaj25POu30qtTSAqErJYUJwNwFi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012874613513:android:d880973c5cbc47182439d8",
+        "android_client_info": {
+          "package_name": "uz.gita.imtihonfirebase1anvarxon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX3zKhaj25POu30qtTSAqErJYUJwNwFi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012874613513:android:e4bd34fad846dfb82439d8",
+        "android_client_info": {
+          "package_name": "uz.gita.imtihonfirebase2anvarxon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX3zKhaj25POu30qtTSAqErJYUJwNwFi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012874613513:android:f70f86e5c306cab92439d8",
+        "android_client_info": {
+          "package_name": "uz.gita.tictactoe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX3zKhaj25POu30qtTSAqErJYUJwNwFi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012874613513:android:eff214b1522b5d4b2439d8",
+        "android_client_info": {
+          "package_name": "uz.gita.xx0game"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX3zKhaj25POu30qtTSAqErJYUJwNwFi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012874613513:android:1e6d3ce3319fc6bd2439d8",
+        "android_client_info": {
+          "package_name": "uz.xon.contactfirebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX3zKhaj25POu30qtTSAqErJYUJwNwFi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012874613513:android:7ad8a5e2a67960612439d8",
+        "android_client_info": {
+          "package_name": "uz.xon.firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX3zKhaj25POu30qtTSAqErJYUJwNwFi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012874613513:android:531d897157091c7c2439d8",
+        "android_client_info": {
+          "package_name": "uz.xon.mytiktaktao"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX3zKhaj25POu30qtTSAqErJYUJwNwFi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
