@@ -1,11 +1,11 @@
 package com.example.adminsaller.data.model
 
 data class ProductsData(
-    val id: String,
-    val name: String,
-    val count: Int,
-    val initialPrice: Int,
-    val sellingPrice: Int,
-    val isValid: Boolean,
-    val comment: String
+    val productID: String,
+    val productName: String,
+    val productCount: Int,
+    val productInitialPrice: Int,
+    val productSellingPrice: Int,
+    val productIsValid: Boolean,
+    val productComment: String
 )

@@ -11,14 +11,13 @@ interface HomeContract {
 
     interface Intent {
         object MoveToAddScreen : Intent
-
-        object UpdateSellerList : Intent
-
+        object MoveToProductsScreen : Intent
         data class DeleteSeller(val sellerData: SellerData) : Intent
+        data class EditSeller(val id: String, val name: String, val password: String) : Intent
     }
 
     data class UIState(
-        val userList: List<SellerData> = emptyList(),
+        val sellerList: List<SellerData> = emptyList(),
         var isLoading: Boolean = false
     )
 

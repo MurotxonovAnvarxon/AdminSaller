@@ -19,16 +19,23 @@ class SellerAddViewModel @Inject constructor(
     private val direction: SellerAddDirection,
     private val appRepository: AppRepository
 ) : SellerAddContract.ViewModel, ViewModel() {
+
     override fun onEventDispatcher(event: SellerAddContract.Event) = intent {
         when (event) {
-            is SellerAddContract.Event.AddUser -> {
-                appRepository.addSeller(SellerRequest(userName = event.sellerName, event.password))
+            is SellerAddContract.Event.AddSeller -> {
+                appRepository.addSeller(
+                    SellerRequest(
+                        id = event.id,
+                        sellerName = event.sellerName,
+                        password = event.password
+                    )
+                )
                     .onStart { postSideEffect(SellerAddContract.SideEffect.ProgressState(true)) }
                     .onCompletion { postSideEffect(SellerAddContract.SideEffect.ProgressState(false)) }
                     .onEach {
                         it.onSuccess {
-                            val userId = it
-                            postSideEffect(SellerAddContract.SideEffect.ShowToast("User muvaffaqiyatli qo'shildi!"))
+                            postSideEffect(SellerAddContract.SideEffect.ProgressState(false))
+                            postSideEffect(SellerAddContract.SideEffect.ShowToast("Seller muvaffaqiyatli qo'shildi!"))
                             direction.back()
                         }
                     }

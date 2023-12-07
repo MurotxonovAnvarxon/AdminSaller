@@ -4,6 +4,8 @@ import com.example.adminsaller.presentor.AddScreen.SellerAddDirection
 import com.example.adminsaller.presentor.AddScreen.SellerAddDirectionImpl
 import com.example.adminsaller.presentor.homeScreen.HomeDirection
 import com.example.adminsaller.presentor.homeScreen.HomeDirectionImpl
+import com.example.adminsaller.presentor.productScreen.ProductDirection
+import com.example.adminsaller.presentor.productScreen.ProductDirectionImpl
 import com.example.adminsaller.presentor.splash.SplashDirection
 import com.example.adminsaller.presentor.splash.SplashDirectionImpl
 import dagger.Binds
@@ -25,6 +27,9 @@ interface DirectionModule {
 
     @[Binds Singleton]
     fun bindAddSellerDirection(impl: SellerAddDirectionImpl): SellerAddDirection
+
+    @[Binds Singleton]
+    fun bindProductScreenDirection(impl: ProductDirectionImpl): ProductDirection
 
 
 }

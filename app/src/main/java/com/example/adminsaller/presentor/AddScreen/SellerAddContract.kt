@@ -9,7 +9,7 @@ interface SellerAddContract {
     }
 
     interface Event {
-        data class AddUser(val sellerName: String, val password: String) : Event
+        data class AddSeller(val id:String,val sellerName: String, val password: String) : Event
     }
 
     interface UiState {

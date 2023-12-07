@@ -1,8 +1,10 @@
 package com.example.adminsaller.utils.components
 
+import android.view.Display.Mode
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,7 +38,8 @@ import com.example.adminsaller.data.model.SellerData
 fun SellerItem(
     model: SellerData,
     onClickDelete: (SellerData) -> Unit,
-    onClick: () -> Unit
+    onClick: () -> Unit = {},
+    onEdit: (SellerData) -> Unit = {}
 ) {
     Card(
         modifier = Modifier
@@ -70,7 +73,7 @@ fun SellerItem(
             ) {
                 Column(modifier = Modifier.align(Alignment.Center)) {
                     Text(
-                        text = "Name: ${model.name}",
+                        text = "Seller: ${model.sellerName}",
                         fontSize = 22.sp,
                         fontWeight = FontWeight.SemiBold
                     )
@@ -82,7 +85,14 @@ fun SellerItem(
                     )
                 }
             }
-
+            Image(painter = painterResource(id = R.drawable.edit),
+                contentDescription = "edit",
+                modifier = Modifier.padding(start = 40.dp)
+                    .size(40.dp)
+                    .align(Alignment.CenterVertically)
+                    .clickable {
+                        onEdit(model)
+                    })
         }
     }
 }
@@ -90,7 +100,7 @@ fun SellerItem(
 @Preview(showBackground = true)
 @Composable
 fun SellerItemPreview() {
-    SellerItem(model =SellerData("", "", ""), onClickDelete = { }) {
+    SellerItem(model = SellerData("", "", ""), onClickDelete = { }) {
 
     }
 }

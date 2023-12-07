@@ -1,10 +1,12 @@
 package com.example.adminsaller.presentor.homeScreen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.adminsaller.domain.repository.AppRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
@@ -27,6 +29,19 @@ class HomeViewModel @Inject constructor(
 
     override fun onEventDispatcher(intent: HomeContract.Intent) {
         when (intent) {
+
+            is HomeContract.Intent.EditSeller -> {
+                viewModelScope.launch {
+                    repository.editSeller(
+                        intent.id,
+                        intent.name,
+                        intent.password
+                    ).onEach {
+                    }
+                        .collect()
+
+                }
+            }
 
             HomeContract.Intent.MoveToAddScreen -> {
                 viewModelScope.launch {

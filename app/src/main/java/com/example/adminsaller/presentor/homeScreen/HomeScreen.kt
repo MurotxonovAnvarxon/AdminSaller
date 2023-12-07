@@ -1,7 +1,10 @@
 package com.example.adminsaller.presentor.homeScreen
 
 import android.annotation.SuppressLint
+import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -13,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
@@ -27,14 +31,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
+import com.example.adminsaller.R
+import com.example.adminsaller.data.model.SellerData
+import com.example.adminsaller.utils.components.DeleteDialog
+import com.example.adminsaller.utils.components.EditDialog
 import com.example.adminsaller.utils.components.SellerItem
 
 class HomeScreen : AndroidScreen() {
@@ -53,25 +64,28 @@ fun MainScreenContent(
     uiState: State<HomeContract.UIState>,
     onEventDispatcher: (HomeContract.Intent) -> Unit
 ) {
-    val userId = remember { mutableStateOf("") }
-    val userPass = remember { mutableStateOf("") }
-    val userName = remember { mutableStateOf("") }
+    val id = remember { mutableStateOf("") }
+    val sellerPass = remember { mutableStateOf("") }
+    val sellerName = remember { mutableStateOf("") }
     val showDialog = remember { mutableStateOf(false) }
-//    if (showDialog.value) DeleteDialog(
-//        onClickDelete = {
-//            showDialog.value = false
-//            onEventDispatcher.invoke(
-//                HomeContract.Intent.DeleteUser(
-//                    UserData(
-//                        userId.value,
-//                        userName.value,
-//                        userPass.value
-//                    )
-//                )
-//            )
-//        },
-//        onClickCancel = { showDialog.value = false }
-//    )
+    val showEditDialog = remember { mutableStateOf(false) }
+    if (showDialog.value) DeleteDialog(
+        onClickDelete = {
+            showDialog.value = false
+            onEventDispatcher.invoke(
+                HomeContract.Intent.DeleteSeller(
+                    SellerData(
+                        id.value,
+                        sellerName.value,
+                        sellerPass.value
+                    )
+                )
+            )
+        },
+        onClickCancel = { showDialog.value = false }
+    )
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -99,20 +113,15 @@ fun MainScreenContent(
                 fontWeight = FontWeight.Bold,
             )
             Spacer(modifier = Modifier.weight(1f))
-            Button(
-                onClick = {
-                    onEventDispatcher(HomeContract.Intent.MoveToAddScreen)
-                }, colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF2196F3)
-                )
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add, contentDescription = null, modifier = Modifier
-                        .size(30.dp),
-                    tint = Color.White
-                )
-            }
+
+            Image(painter = painterResource(id = R.drawable.boxes),
+                contentDescription ="boxes",
+                modifier = Modifier
+                    .size(80.dp)
+                    .clickable {  } )
+
         }
+
 
         LazyColumn(
             modifier = Modifier
@@ -120,23 +129,61 @@ fun MainScreenContent(
                 .padding(top = 70.dp, bottom = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(uiState.value.userList) {
+            items(uiState.value.sellerList) {
                 SellerItem(
                     model = it,
                     onClick = {
-//                        onEventDispatcher.invoke(
-////                            HomeContract.Intent.MoveToAddScreen()
-//                        )
+                        onEventDispatcher.invoke(
+                            HomeContract.Intent.MoveToAddScreen
+                        )
                     },
                     onClickDelete = { data ->
-                        userName.value = data.name
-                        userId.value = data.id
-                        userPass.value = data.password
+                        sellerName.value = data.sellerName
+                        id.value = data.id
+                        sellerPass.value = data.password
                         showDialog.value = true
-                    })
+                    },
+                    onEdit = { data ->
+
+                        sellerName.value = data.sellerName
+                        id.value=data.id
+                        sellerPass.value = data.password
+                        showEditDialog.value = true
+                    }
+                )
             }
         }
+        Button(
+            onClick = {
+                onEventDispatcher(HomeContract.Intent.MoveToAddScreen)
+            }, colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFFFC107)
+            ), shape = RoundedCornerShape(100),
+            modifier = Modifier
+                .padding(20.dp)
+                .align(Alignment.BottomEnd)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Add, contentDescription = null, modifier = Modifier
+                    .size(40.dp),
+                tint = Color.Black
+            )
+        }
     }
+    if (showEditDialog.value) EditDialog(
+        SellerData(id.value, sellerName.value, sellerPass.value),
+        onClickEdit = {
+            onEventDispatcher.invoke(
+                HomeContract.Intent.EditSeller(
+                   id.value, it.sellerName,it.password
+                )
+            )
+            showEditDialog.value = false
+
+        },
+        onClickCancel = { showEditDialog.value = false },
+    )
+
 }
 
 @SuppressLint("UnrememberedMutableState")

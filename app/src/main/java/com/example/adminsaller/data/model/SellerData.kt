@@ -2,6 +2,6 @@ package com.example.adminsaller.data.model
 
 data class SellerData(
     val id: String,
-    val name: String,
+    val sellerName: String,
     val password: String
 )

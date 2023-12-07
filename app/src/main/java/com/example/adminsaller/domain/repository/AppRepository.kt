@@ -6,8 +6,17 @@ import kotlinx.coroutines.flow.Flow
 
 interface AppRepository {
 
-    fun addSeller(request: SellerRequest): Flow<Result<String>>
+
+    //sellers
+    fun addSeller(request: SellerRequest): Flow<Result<SellerData>>
     fun deleteSeller(sellerData: SellerData): Flow<Result<String>>
     fun getSellers(): Flow<Result<List<SellerData>>>
+    fun editSeller(id: String, sellerName: String, password: String):Flow<Result<String>>
+
+
+
+
+
+    //products
 
 }

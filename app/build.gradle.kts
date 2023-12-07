@@ -93,9 +93,9 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 
     // MVI orbit
-    implementation ("org.orbit-mvi:orbit-viewmodel:4.6.1")
-    implementation ("org.orbit-mvi:orbit-compose:4.6.1")
-    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
+    implementation("org.orbit-mvi:orbit-viewmodel:4.6.1")
+    implementation("org.orbit-mvi:orbit-compose:4.6.1")
+
 
     //asynch image
     implementation("io.coil-kt:coil-compose:2.5.0")

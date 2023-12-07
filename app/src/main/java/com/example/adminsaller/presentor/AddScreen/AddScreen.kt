@@ -146,7 +146,8 @@ fun SellerAddScreenContent(
             onClick = {
                 if (sellerName.length>3 && password.length>3){
                     onEventDispatcher.invoke(
-                        SellerAddContract.Event.AddUser(
+                        SellerAddContract.Event.AddSeller(
+                            id = "",
                             sellerName.trim(),
                             password.trim()
                         )
@@ -156,6 +157,7 @@ fun SellerAddScreenContent(
                 }
 
             }, modifier = Modifier
+                .padding(horizontal = 20.dp)
                 .padding(bottom = 70.dp, start = 16.dp, end = 16.dp)
                 .fillMaxWidth()
                 .height(60.dp)
