@@ -76,7 +76,6 @@ fun ProductItem(
                         .clickable {
                             onEdit(model)
                         })
-
             }
             Spacer(modifier = Modifier.size(15.dp))
 

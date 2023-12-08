@@ -24,14 +24,11 @@ interface AppRepository {
     fun getAllProducts(): Flow<List<ProductsData>>
 
     fun editProducts(
-        productID: String,
-        productName: String,
-        productCount: Int,
-        productInitialPrice: Int,
-        productSellingPrice: Int,
-        productIsValid: Boolean,
-        productComment: String
-    ): Flow<Result<String>>
+        productsData: ProductsData
+    ): Flow<String>
 
+
+
+//    fun login(name: String, password: String): Flow<Result<Unit>>
 
 }

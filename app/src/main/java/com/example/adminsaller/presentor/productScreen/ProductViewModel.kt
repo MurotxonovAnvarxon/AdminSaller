@@ -2,6 +2,7 @@ package com.example.adminsaller.presentor.productScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.adminsaller.data.model.ProductsData
 import com.example.adminsaller.data.repository.AppRepositoryImpl
 import com.example.adminsaller.domain.repository.AppRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,12 +36,35 @@ class ProductViewModel @Inject constructor(
                 }
             }
 
+            ProductContract.Intent.MoveToDraft->{
+                viewModelScope.launch {
+                    direction.moveToDraft()
+                }
+            }
             is ProductContract.Intent.DeleteProduct -> {
+
                 viewModelScope.launch {
                     repository.deleteProduct(intent.productsData).onEach {
                         getAllProducts()
                     }.launchIn(viewModelScope)
                 }
+            }
+
+            is ProductContract.Intent.EditProduct -> {
+                viewModelScope.launch {
+                    repository.editProducts(
+                        ProductsData(
+                            intent.productID,
+                            intent.productName,
+                            intent.productCount,
+                            intent.productInitialPrice,
+                            intent.productSellingPrice,
+                            intent.productIsValid,
+                            intent.productComment
+                        )
+                    ).launchIn(viewModelScope)
+                }
+
             }
         }
     }

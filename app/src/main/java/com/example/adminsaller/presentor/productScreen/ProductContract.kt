@@ -12,12 +12,12 @@ interface ProductContract {
     }
 
     interface Intent {
-        object MoveToHomeScreen : Intent
+        object MoveToDraft : Intent
         object MoveToAddProductsScreen : Intent
         data class DeleteProduct(val productsData: ProductsData) : Intent
 
         data class EditProduct(
-            val id: String,
+            val productID: String,
             val productName: String,
             val productCount: Int,
             val productInitialPrice: Int,

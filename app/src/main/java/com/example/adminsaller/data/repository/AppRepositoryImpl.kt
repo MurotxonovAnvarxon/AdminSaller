@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.adminsaller.data.model.ProductsData
 import com.example.adminsaller.data.model.SellerData
 import com.example.adminsaller.data.model.toCommonData
+import com.example.adminsaller.data.myPref.MyPref
 import com.example.adminsaller.data.remote.request.ProductRequest
 import com.example.adminsaller.data.remote.request.SellerRequest
 import com.example.adminsaller.domain.repository.AppRepository
@@ -23,8 +24,10 @@ import java.util.UUID
 import javax.inject.Inject
 
 class AppRepositoryImpl @Inject constructor(
-    private val fireStore: FirebaseFirestore
-) : AppRepository {
+    private val fireStore: FirebaseFirestore,
+    private val pref: MyPref,
+
+    ) : AppRepository {
 
     private val realtTimeFireBase = Firebase.database.getReference("Products")
 
@@ -93,7 +96,6 @@ class AppRepositoryImpl @Inject constructor(
     override fun addProduct(productRequest: ProductRequest): Flow<Result<ProductsData>> =
         callbackFlow {
             val uuid = realtTimeFireBase.push().key ?: UUID.randomUUID().toString()
-            Log.d("TAG", "addProduct: ")
             realtTimeFireBase.child(uuid).setValue(productRequest).addOnSuccessListener {
                 trySend(
                     Result.success(
@@ -110,6 +112,8 @@ class AppRepositoryImpl @Inject constructor(
                 )
             }
             awaitClose()
+
+
         }
 
     override fun deleteProduct(productsData: ProductsData): Flow<Result<String>> = callbackFlow {
@@ -129,15 +133,51 @@ class AppRepositoryImpl @Inject constructor(
         awaitClose()
     }
 
-    override fun editProducts(
-        productID: String,
-        productName: String,
-        productCount: Int,
-        productInitialPrice: Int,
-        productSellingPrice: Int,
-        productIsValid: Boolean,
-        productComment: String
-    ): Flow<Result<String>> = callbackFlow {
 
+    override fun editProducts(productsData: ProductsData): Flow<String> = callbackFlow {
+        val updates = hashMapOf<String, Any?>(
+            "productID" to productsData.productID,
+            "productName" to productsData.productName,
+            "productCount" to productsData.productCount,
+            "productInitialPrice" to productsData.productInitialPrice,
+            "productSellingPrice" to productsData.productSellingPrice,
+            "productIsValid" to false,
+            "productComment" to productsData.productComment,
+        )
+
+        realtTimeFireBase.child(productsData.productID).updateChildren(updates)
+            .addOnSuccessListener {
+                trySend("ishladi")
+            }
+            .addOnFailureListener {
+                trySend(it.toString())
+            }
+
+        awaitClose()
     }
+
+//    override fun login(name: String, password: String): Flow<Result<Unit>> = callbackFlow {
+//        fireStore.collection("Admin")
+//            .whereEqualTo("adminName", name)
+//            .get()
+//            .addOnSuccessListener {
+//                if (it.documents.isEmpty()) {
+//                    trySend(Result.failure(Exception("There is not such user")))
+//                } else {
+//                    it.documents.forEach {
+//                        if (it.data?.getOrDefault("password", "").toString()
+//                            == password
+//                        ) {
+//                            pref.saveId(it.id)
+//                            trySend(Result.success(Unit))
+//                        } else {
+//                            trySend(Result.failure(Exception("Password does not match")))
+//                        }
+//                    }
+//                }
+//            }
+//        awaitClose()
+//
+//    }
 }
+

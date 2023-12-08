@@ -40,6 +40,7 @@ import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.hilt.getViewModel
 import com.example.adminsaller.R
 import com.example.adminsaller.data.model.ProductsData
+import com.example.adminsaller.presentor.draft.DraftContract
 import com.example.adminsaller.utils.components.DeleteDialog
 import com.example.adminsaller.utils.components.EditProductsDialog
 import com.example.adminsaller.utils.components.ProductItem
@@ -121,7 +122,12 @@ fun ProductsScreenContent(
             )
             Spacer(modifier = Modifier.weight(1f))
 
-
+            Image(
+                painter = painterResource(id = R.drawable.delete),
+                contentDescription = "delete",
+                modifier = Modifier.clickable {
+                   onEventDispatcher.invoke(ProductContract.Intent.MoveToDraft)
+                })
         }
 
 
@@ -131,7 +137,9 @@ fun ProductsScreenContent(
                 .padding(top = 70.dp, bottom = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(uiState.value.productList) {
+            items(uiState.value.productList.filter {
+                it.productIsValid==true
+            }) {
                 ProductItem(
                     model = it,
                     onClick = {

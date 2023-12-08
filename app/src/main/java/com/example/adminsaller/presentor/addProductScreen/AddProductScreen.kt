@@ -3,6 +3,7 @@ package com.example.adminsaller.presentor.addProductScreen
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -89,7 +90,7 @@ fun AddProductScreenContent(
     var productCount: String by remember { mutableStateOf("") }
     var productInitialPrice: String by remember { mutableStateOf("") }
     var productSellingPrice: String by remember { mutableStateOf("") }
-    var productIsValid2: Boolean by remember { mutableStateOf(false) }
+    var productIsValid2: String by remember { mutableStateOf("true") }
     var productComment: String by remember { mutableStateOf("") }
 
 
@@ -105,7 +106,7 @@ fun AddProductScreenContent(
             contentDescription = "trade",
             alignment = Alignment.TopCenter,
             modifier = Modifier
-                .padding(top = 36.dp, start = 36.dp, end = 36.dp)
+                .padding(top = 16.dp, start = 36.dp, end = 36.dp)
                 .fillMaxWidth()
                 .height(170.dp)
         )
@@ -116,7 +117,8 @@ fun AddProductScreenContent(
                     productName = it
                 }, modifier = Modifier
                     .padding(vertical = 8.dp, horizontal = 16.dp)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    ,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 label = { Text(text = "productName") },
 
@@ -148,12 +150,10 @@ fun AddProductScreenContent(
                     .padding(vertical = 8.dp, horizontal = 16.dp)
                     .fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                label = { Text(text = "productInitialPrice") },
+                label = { Text(text = "productInitialPrice:$") },
 
                 singleLine = true
             )
-
-
 
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
@@ -163,7 +163,7 @@ fun AddProductScreenContent(
                     .padding(vertical = 8.dp, horizontal = 16.dp)
                     .fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                label = { Text(text = "productSellingPrice") },
+                label = { Text(text = "productSellingPrice:$") },
 
                 singleLine = true
             )
@@ -183,12 +183,23 @@ fun AddProductScreenContent(
             )
 
             Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = productIsValid2, onValueChange = {
+                    productIsValid2 = it
+                }, modifier = Modifier
+                    .padding(vertical = 8.dp, horizontal = 16.dp)
+                    .fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                label = { Text(text = "productIsValid") },
+
+                singleLine = true
+            )
 
 
         }
         Button(
             onClick = {
-                if (productName.length > 3 ) {
+                if (productName.length > 3) {
                     onEventDispatcher.invoke(
                         AddProductsContract.Event.AddProduct(
                             productID = "",
@@ -196,14 +207,14 @@ fun AddProductScreenContent(
                             productCount.toInt(),
                             productInitialPrice.toInt(),
                             productSellingPrice.toInt(),
-                            productIsValid2 ,
+                            productIsValid2.toBoolean(),
                             productComment,
-                            )
+                        )
                     )
                 } else {
                     Toast.makeText(
                         context,
-                        "ProductName ",
+                        "ProductName length <3 ",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

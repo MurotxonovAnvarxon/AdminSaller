@@ -4,8 +4,12 @@ import com.example.adminsaller.presentor.AddScreen.SellerAddDirection
 import com.example.adminsaller.presentor.AddScreen.SellerAddDirectionImpl
 import com.example.adminsaller.presentor.addProductScreen.AddProductDirection
 import com.example.adminsaller.presentor.addProductScreen.AddProductsScreenDirectionImpl
+import com.example.adminsaller.presentor.draft.DraftDirection
+import com.example.adminsaller.presentor.draft.DraftDirectionImpl
 import com.example.adminsaller.presentor.homeScreen.HomeDirection
 import com.example.adminsaller.presentor.homeScreen.HomeDirectionImpl
+import com.example.adminsaller.presentor.login.LoginDirection
+import com.example.adminsaller.presentor.login.LoginDirectionIMpl
 import com.example.adminsaller.presentor.productScreen.ProductDirection
 import com.example.adminsaller.presentor.productScreen.ProductDirectionImpl
 import com.example.adminsaller.presentor.splash.SplashDirection
@@ -35,6 +39,11 @@ interface DirectionModule {
 
     @[Binds Singleton]
     fun bindAddProductsScreenDirection(impl: AddProductsScreenDirectionImpl): AddProductDirection
+
+    @[Binds Singleton]
+    fun draftDirection(impl: DraftDirectionImpl): DraftDirection
+    @[Binds Singleton]
+    fun bindloginDirection(impl: LoginDirectionIMpl): LoginDirection
 
 
 }
