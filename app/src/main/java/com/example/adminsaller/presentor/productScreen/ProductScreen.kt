@@ -1,6 +1,7 @@
 package com.example.adminsaller.presentor.productScreen
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -187,33 +188,37 @@ fun ProductsScreenContent(
             )
         }
     }
-    if (showEditProductDialog.value) EditProductsDialog(
-        ProductsData(
-            productName.value,
-            productID.value,
-            productCount.value,
-            productInitialPrice.value,
-            productSellingPrice.value,
-            productIsValid.value,
-            productComment.value,
-        ),
-        onClickEdit = {
-            onEventDispatcher.invoke(
-                ProductContract.Intent.EditProduct(
-                    productName.value,
-                    productID.value,
-                    productCount.value,
-                    productInitialPrice.value,
-                    productSellingPrice.value,
-                    productIsValid.value,
-                    productComment.value,
-                )
-            )
-            showEditProductDialog.value = false
+    if (showEditProductDialog.value){
+        Log.d("BBB", "product name11 ${productName.value}")
 
-        },
-        onClickCancel = { showEditProductDialog.value = false },
-    )
+        EditProductsDialog(
+            ProductsData(
+                productID.value,
+                productName.value,
+                productCount.value,
+                productInitialPrice.value,
+                productSellingPrice.value,
+                productIsValid.value,
+                productComment.value,
+            ),
+            onClickEdit = {
+                onEventDispatcher.invoke(
+                    ProductContract.Intent.EditProduct(
+                        productName.value,
+                        productID.value,
+                        productCount.value,
+                        productInitialPrice.value,
+                        productSellingPrice.value,
+                        productIsValid.value,
+                        productComment.value,
+                    )
+                )
+                showEditProductDialog.value = false
+
+            },
+            onClickCancel = { showEditProductDialog.value = false },
+        )
+    }
 
 }
 

@@ -39,133 +39,148 @@ import com.example.adminsaller.data.model.SellerData
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditProductsDialog(
-    productsData: ProductsData,
-    onClickEdit: (ProductsData) -> Unit,
-    onClickCancel: () -> Unit
+    productsData: ProductsData, onClickEdit: (ProductsData) -> Unit, onClickCancel: () -> Unit
 ) {
-    androidx.compose.material3.AlertDialog(
-        onDismissRequest = {
-            onClickCancel()
-        },
-        confirmButton = {
-            Box(
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .wrapContentHeight(),
+    androidx.compose.material3.AlertDialog(onDismissRequest = {
+        onClickCancel()
+    }, confirmButton = {
+        Box(
+            modifier = Modifier
+                .wrapContentWidth()
+                .wrapContentHeight(),
+        ) {
+
+            var productName: String by remember { mutableStateOf(productsData.productName) }
+            var productCount: String by remember { mutableStateOf(productsData.productCount.toString()) }
+            var productInitialPrice: String by remember { mutableStateOf(productsData.productInitialPrice.toString()) }
+            var productSellingPrice: String by remember { mutableStateOf(productsData.productSellingPrice.toString()) }
+            var productIsValid: String by remember { mutableStateOf(productsData.productIsValid.toString()) }
+            var productComment: String by remember { mutableStateOf(productsData.productComment) }
+
+            Column(
+                modifier = Modifier.align(Alignment.Center)
             ) {
-
-                var productName: String by remember { mutableStateOf(productsData.productName) }
-                var productCount: String by remember { mutableStateOf(productsData.productCount.toString()) }
-                var productInitialPrice: String by remember { mutableStateOf(productsData.productInitialPrice.toString()) }
-                var productSellingPrice: String by remember { mutableStateOf(productsData.productSellingPrice.toString()) }
-                var productIsValid: String by remember { mutableStateOf(productsData.productIsValid.toString()) }
-                var productComment: String by remember { mutableStateOf(productsData.productComment) }
-
-                Column(
+                OutlinedTextField(
+                    value = productName,
+                    onValueChange = {
+                        productName = it
+                    },
                     modifier = Modifier
-                        .align(Alignment.Center)
-                ) {
-                    OutlinedTextField(
-                        value = productName, onValueChange = {
-                            productName = it
-                        }, modifier = Modifier
-                            .padding(vertical = 8.dp, horizontal = 16.dp)
-                            .fillMaxWidth(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                        label = { Text(text = "productName") },
-                        singleLine = true
-                    )
+                        .padding(vertical = 8.dp, horizontal = 16.dp)
+                        .fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    label = { Text(text = "productName") },
+                    singleLine = true
+                )
 
-                    Spacer(modifier = Modifier.height(8.dp))
-                    OutlinedTextField(
-                        value = productCount,
-                        onValueChange = {
-                            productCount = it
-                        },  keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                        modifier = Modifier
-                            .padding(vertical = 12.dp, horizontal = 16.dp)
-                            .fillMaxWidth(),
-                        singleLine = true,
-                        label = {
-                            Text(text = "count")
-                        },
-                    )
-                    OutlinedTextField(
-                        value = productInitialPrice, onValueChange = {
-                            productInitialPrice = it
-                        }, modifier = Modifier
-                            .padding(vertical = 8.dp, horizontal = 16.dp)
-                            .fillMaxWidth(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                        label = { Text(text = "productInitialPrice") },
-                        singleLine = true
-                    )
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = productCount,
+                    onValueChange = {
+                        productCount = it
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    modifier = Modifier
+                        .padding(vertical = 12.dp, horizontal = 16.dp)
+                        .fillMaxWidth(),
+                    singleLine = true,
+                    label = {
+                        Text(text = "count")
+                    },
+                )
+                OutlinedTextField(
+                    value = productInitialPrice,
+                    onValueChange = {
+                        productInitialPrice = it
+                    },
+                    modifier = Modifier
+                        .padding(vertical = 8.dp, horizontal = 16.dp)
+                        .fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    label = { Text(text = "productInitialPrice") },
+                    singleLine = true
+                )
 
-                    Spacer(modifier = Modifier.height(8.dp))
-                    OutlinedTextField(
-                        value = productSellingPrice,
-                        onValueChange = {
-                            productSellingPrice = it
-                        },  keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                        modifier = Modifier
-                            .padding(vertical = 12.dp, horizontal = 16.dp)
-                            .fillMaxWidth(),
-                        singleLine = true,
-                        label = {
-                            Text(text = "productSellingPrice")
-                        },
-                    )
-                    OutlinedTextField(
-                        value = productIsValid, onValueChange = {
-                            productIsValid = it
-                        }, modifier = Modifier
-                            .padding(vertical = 8.dp, horizontal = 16.dp)
-                            .fillMaxWidth(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                        label = { Text(text = "productIsValid") },
-                        singleLine = true
-                    )
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = productSellingPrice,
+                    onValueChange = {
+                        productSellingPrice = it
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    modifier = Modifier
+                        .padding(vertical = 12.dp, horizontal = 16.dp)
+                        .fillMaxWidth(),
+                    singleLine = true,
+                    label = {
+                        Text(text = "productSellingPrice")
+                    },
+                )
+                OutlinedTextField(
+                    value = productIsValid,
+                    onValueChange = {
+                        productIsValid = it
+                    },
+                    modifier = Modifier
+                        .padding(vertical = 8.dp, horizontal = 16.dp)
+                        .fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    label = { Text(text = "productIsValid") },
+                    singleLine = true
+                )
 
-                    Spacer(modifier = Modifier.height(8.dp))
-                    OutlinedTextField(
-                        value = productComment,
-                        onValueChange = {
-                            productComment = it
-                        },  keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                        modifier = Modifier
-                            .padding(vertical = 12.dp, horizontal = 16.dp)
-                            .fillMaxWidth(),
-                        singleLine = true,
-                        label = {
-                            Text(text = "productComment")
-                        },
-                    )
-                }
-                Spacer(modifier = Modifier.size(30.dp))
-                Row(modifier = Modifier
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = productComment,
+                    onValueChange = {
+                        productComment = it
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    modifier = Modifier
+                        .padding(vertical = 12.dp, horizontal = 16.dp)
+                        .fillMaxWidth(),
+                    singleLine = true,
+                    label = {
+                        Text(text = "productComment")
+                    },
+                )
+            }
+            Spacer(modifier = Modifier.size(30.dp))
+            Row(
+                modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 600.dp)) {
-                    Button(
-                        onClick = { onClickCancel() },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC107))
-                    ) {
-                        Text(text = "Cancel", color = Color.Black)
-                    }
-                    Spacer(modifier = Modifier.weight(1f))
+                    .padding(top = 600.dp)
+            ) {
+                Button(
+                    onClick = { onClickCancel() },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC107))
+                ) {
+                    Text(text = "Cancel", color = Color.Black)
+                }
+                Spacer(modifier = Modifier.weight(1f))
 
-                    Button(
-                        onClick = {
+                Button(
+                    onClick = {
 
-                            onClickEdit(ProductsData(productID = "", productName = productName,productCount.toInt(),productInitialPrice.toInt(),productSellingPrice.toInt(),productIsValid.toBoolean(),productComment)) },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC107))
-                    ) {
-                        Text(text = "Edit", color = Color.Black)
-                    }
+                        onClickEdit(
+                            ProductsData(
+                                productID = "",
+                                productName = productName,
+                                productCount.toInt(),
+                                productInitialPrice.toInt(),
+                                productSellingPrice.toInt(),
+                                productIsValid.toBoolean(),
+                                productComment
+                            )
+                        )
+                    }, colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC107))
+                ) {
+                    Text(text = "Edit", color = Color.Black)
                 }
             }
-
         }
-    )
+
+    })
 
 }
 

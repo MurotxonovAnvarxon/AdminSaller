@@ -33,84 +33,70 @@ class AppRepositoryImpl @Inject constructor(
 
     override fun addSeller(request: SellerRequest): Flow<Result<SellerData>> = callbackFlow {
 
-        fireStore.collection("Sellers")
-            .add(request)
-            .addOnSuccessListener {
-                Log.d("TTT", "addSeller: ${it.id}")
-                trySend(Result.success(SellerData(it.id, request.sellerName, request.password)))
-            }
-            .addOnFailureListener {
-                trySend(Result.failure(it))
-            }
+        fireStore.collection("Sellers").add(request).addOnSuccessListener {
+            Log.d("TTT", "addSeller: ${it.id}")
+            trySend(Result.success(SellerData(it.id, request.sellerName, request.password)))
+        }.addOnFailureListener {
+            trySend(Result.failure(it))
+        }
         awaitClose()
     }
 
     override fun deleteSeller(sellerData: SellerData): Flow<Result<String>> = callbackFlow {
         Log.d("TTT", "deleteSellerId:${sellerData.id} ")
-        fireStore.collection("Sellers")
-            .document(sellerData.id)
-            .delete()
-            .addOnSuccessListener {
-                trySend(Result.success("Seller muvvaffiqiyatli o'chirildi"))
-            }
-            .addOnFailureListener {
-                trySend(Result.failure(it))
-            }
+        fireStore.collection("Sellers").document(sellerData.id).delete().addOnSuccessListener {
+            trySend(Result.success("Seller muvvaffiqiyatli o'chirildi"))
+        }.addOnFailureListener {
+            trySend(Result.failure(it))
+        }
         awaitClose()
     }
 
     override fun getSellers(): Flow<Result<List<SellerData>>> = callbackFlow {
-        fireStore
-            .collection("Sellers")
-            .getAllLive {
-                return@getAllLive SellerData(
-                    it.id,
-                    it.data?.getOrDefault("sellerName", "") as String,
-                    it.data?.getOrDefault("password", "") as String
-                )
-            }
-            .onEach { trySend(it.onSuccess { it }) }
-            .collect()
+        fireStore.collection("Sellers").getAllLive {
+            return@getAllLive SellerData(
+                it.id,
+                it.data?.getOrDefault("sellerName", "") as String,
+                it.data?.getOrDefault("password", "") as String
+            )
+        }.onEach { trySend(it.onSuccess { it }) }.collect()
         awaitClose()
 
     }
 
     override fun editSeller(
-        id: String,
-        sellerName: String,
-        password: String
-    ): Flow<Result<String>> =
-        callbackFlow {
-            fireStore.collection("Sellers")
-                .document(id)
-                .set(SellerData(id, sellerName, password))
-                .addOnSuccessListener {
-                    trySend(Result.success("success"))
-                }
-                .addOnFailureListener {
-                    trySend(Result.failure(it))
-                }
-            awaitClose()
-        }
+        id: String, sellerName: String, password: String
+    ): Flow<Result<String>> = callbackFlow {
+        fireStore.collection("Sellers").document(id).set(SellerData(id, sellerName, password))
+            .addOnSuccessListener {
+                trySend(Result.success("success"))
+            }.addOnFailureListener {
+                trySend(Result.failure(it))
+            }
+        awaitClose()
+    }
 
     override fun addProduct(productRequest: ProductRequest): Flow<Result<ProductsData>> =
         callbackFlow {
-            val uuid = realtTimeFireBase.push().key ?: UUID.randomUUID().toString()
-            realtTimeFireBase.child(uuid).setValue(productRequest).addOnSuccessListener {
-                trySend(
-                    Result.success(
-                        ProductsData(
-                            productRequest.productID,
-                            productRequest.productName,
-                            productRequest.productCount,
-                            productRequest.productInitialPrice,
-                            productRequest.productSellingPrice,
-                            productRequest.productIsValid,
-                            productRequest.productComment
+            val uuid = UUID.randomUUID().toString()
+            productRequest.productID = uuid
+
+            realtTimeFireBase.child(productRequest.productID).setValue(productRequest)
+                .addOnSuccessListener {
+                    trySend(
+                        Result.success(
+                            ProductsData(
+                                productRequest.productID,
+                                productRequest.productName,
+                                productRequest.productCount,
+                                productRequest.productInitialPrice,
+                                productRequest.productSellingPrice,
+                                productRequest.productIsValid,
+                                productRequest.productComment
+                            )
                         )
                     )
-                )
-            }
+                }
             awaitClose()
 
 
@@ -122,38 +108,44 @@ class AppRepositoryImpl @Inject constructor(
     }
 
     override fun getAllProducts(): Flow<List<ProductsData>> = callbackFlow {
-        realtTimeFireBase
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    trySend(snapshot.children.map { it.toCommonData() })
-                }
+        realtTimeFireBase.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                trySend(snapshot.children.map { it.toCommonData() })
+            }
 
-                override fun onCancelled(error: DatabaseError) {}
-            })
+            override fun onCancelled(error: DatabaseError) {}
+        })
         awaitClose()
     }
 
 
     override fun editProducts(productsData: ProductsData): Flow<String> = callbackFlow {
-        val updates = hashMapOf<String, Any?>(
-            "productID" to productsData.productID,
-            "productName" to productsData.productName,
-            "productCount" to productsData.productCount,
-            "productInitialPrice" to productsData.productInitialPrice,
-            "productSellingPrice" to productsData.productSellingPrice,
-            "productIsValid" to false,
-            "productComment" to productsData.productComment,
-        )
+        val updateData = mutableMapOf<String, Any?>()
 
-        realtTimeFireBase.child(productsData.productID).updateChildren(updates)
-            .addOnSuccessListener {
-                trySend("ishladi")
-            }
-            .addOnFailureListener {
-                trySend(it.toString())
-            }
+        updateData["productID"] = productsData.productID
+        updateData["productName"] = productsData.productName
+        updateData["productCount"] = productsData.productCount
+        updateData["productInitialPrice"] = productsData.productInitialPrice
+        updateData["productSellingPrice"] = productsData.productSellingPrice
+        updateData["productIsValid"] = productsData.productIsValid
+        updateData["productComment"] = productsData.productComment
 
+
+        val firebase = realtTimeFireBase.child(productsData.productID)
+        Log.d("TTT", firebase.toString())
+        firebase.updateChildren(updateData)
+
+        /*
+        firebase.updateChildren(updateData).addOnSuccessListener {
+            trySend("ishladi")
+            Log.d("FFF", "updates $updateData")
+        }.addOnFailureListener {
+            trySend(it.toString())
+        }*/
         awaitClose()
+
+        // firebase.updateChildren(updates)
+        //
     }
 
 //    override fun login(name: String, password: String): Flow<Result<Unit>> = callbackFlow {
